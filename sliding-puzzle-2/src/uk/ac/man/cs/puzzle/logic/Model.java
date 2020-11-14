@@ -45,9 +45,13 @@ public class Model {
 			int r = (int) (Math.random() * ROWS);
 			int c = (int) (Math.random() * COLS);
 			moveTile(r, c);
+			if (MoveCounter > tempMoveCounter) {
+				MoveCounter = MoveCounter - 1;
+				}
+			
 		}
-		MoveCounter = tempMoveCounter;
 	}
+	
 
 	// Move a tile to empty position beside it, if possible.
 	// Return true if it was moved, false if not legal.
