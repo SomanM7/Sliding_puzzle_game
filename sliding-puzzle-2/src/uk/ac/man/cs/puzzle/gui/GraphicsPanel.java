@@ -17,13 +17,14 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 	private static final long serialVersionUID = -6961345367517564513L;
 	private static int ROWS;
 	private static int COLS;
+	private GUI gui;
 
 	static final int CELL_SIZE = 80; // Pixels
 	private Font biggerFont;
 
 	private Model puzzleModel;
 
-	public GraphicsPanel(Model puzzleModel, int rows, int cols) {
+	public GraphicsPanel(Model puzzleModel,GUI gui, int rows, int cols) {
 		biggerFont = new Font("SansSerif", Font.BOLD, CELL_SIZE / 2);
 
 		ROWS = rows;
@@ -34,6 +35,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 		this.addMouseListener(this);
 		this.puzzleModel = puzzleModel;
 		puzzleModel.shuffle();
+		this.gui = gui;
 	}
 	
 	public int[] getTileRCFromCoordinates(MouseEvent e) {
@@ -68,6 +70,11 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 		if (!puzzleModel.moveTile(row, col)) {
 			// moveTile moves tile if legal, else returns false.
 			Toolkit.getDefaultToolkit().beep();
+		}
+		else {
+
+			gui.currentMovesLabel.setText("" + puzzleModel.getMoveCount());
+
 		}
 
 		this.repaint(); // Show any updates to model.
