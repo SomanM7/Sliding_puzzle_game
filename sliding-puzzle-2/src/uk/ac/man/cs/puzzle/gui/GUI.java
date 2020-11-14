@@ -51,8 +51,7 @@ public class GUI extends JPanel {
 
 		currentMovesLabel = new JLabel();
 		currentMovesLabel.setText(""+ puzzleModel.getMoveCount());
-		currentMovesLabel.setBounds(55, 232, 100, 100);
-		add(currentMovesLabel);
+		
 		
 	
 		MovesLabel = new JLabel();
