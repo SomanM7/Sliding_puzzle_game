@@ -3,6 +3,9 @@ package uk.ac.man.cs.puzzle.logic;
 public class Model {
 	private static int ROWS;
 	private static int COLS;
+	private static int MoveCounter;
+	private static int tempMoveCounter;
+
 
 	private Tile[][] contents; // All tiles.
 	private Tile emptyTile; // The empty space.
@@ -21,6 +24,7 @@ public class Model {
 
 	// Initialise and game model
 	public void reset() {
+		resetMoveCounter();
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLS; c++) {
 				contents[r][c] = new Tile(r, c, "" + (r * COLS + c + 1));
@@ -35,12 +39,14 @@ public class Model {
 	// Shuffle the tiles around to create a new game.
 	public void shuffle() {
 		// Mix up the board through a series of legal moves.
+		tempMoveCounter = MoveCounter;
 		int rand = (int) (Math.random() * 1000);
 		for (int i = 0; i < rand; i++) {
 			int r = (int) (Math.random() * ROWS);
 			int c = (int) (Math.random() * COLS);
 			moveTile(r, c);
 		}
+		MoveCounter = tempMoveCounter;
 	}
 
 	// Move a tile to empty position beside it, if possible.
@@ -58,6 +64,7 @@ public class Model {
 		// Check to see if this neighbour is on board and is empty.
 		if (isLegalRowCol(rNeighbor, cNeighbor) && contents[rNeighbor][cNeighbor] == emptyTile) {
 			exchangeTiles(r, c, rNeighbor, cNeighbor);
+			MoveCounter++;
 			return true;
 		}
 		return false;
@@ -82,6 +89,7 @@ public class Model {
 				if (!trc.isInFinalPosition(r, c))
 					return false;
 			}
+			getMoveCount();
 		}
 
 		// Falling through loop means nothing out of place.
@@ -97,12 +105,11 @@ public class Model {
 	}
 
 	public int getMoveCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return MoveCounter;
 	}
 	
 	public void resetMoveCounter() {
-		// TODO Auto-generated method stub
+		MoveCounter = 0;
 		
 	}
 
