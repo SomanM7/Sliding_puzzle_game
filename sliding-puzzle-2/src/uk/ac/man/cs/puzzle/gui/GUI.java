@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +23,7 @@ public class GUI extends JPanel {
 	private int ROWS;
 	private int COLS;
 	JLabel currentMovesLabel;
-	JLabel Moves;
+	JLabel MovesLabel;
 
 
 	public GUI(int rows, int cols) {
@@ -54,9 +55,16 @@ public class GUI extends JPanel {
 		add(currentMovesLabel);
 		
 	
-		Moves = new JLabel();
-		Moves.setText("Moves: ");
-;
+		MovesLabel = new JLabel();
+		MovesLabel.setText("Moves: ");
+		
+		JPanel MovesCounterPanel = new JPanel();
+		MovesCounterPanel.setLayout(new FlowLayout());
+		MovesCounterPanel.add(MovesLabel);
+		MovesCounterPanel.add(currentMovesLabel);
+		
+		
+
 
 
 		// Create game timer panel
@@ -65,13 +73,18 @@ public class GUI extends JPanel {
 		gameTimerPanel.add(timerLabel);
 		gameTimerPanel.add(currentTimeLabel);
 		gameTimerPanel.add(unitsLabel);
+		
+		JPanel MenuPanel = new JPanel();
+		MenuPanel.setLayout(new BoxLayout(MenuPanel,BoxLayout.Y_AXIS));
+		MenuPanel.add(gameTimerPanel);
+		MenuPanel.add(MovesCounterPanel);
 
 		// Set the layout and add the components
 		this.setLayout(new BorderLayout());
 		this.add(controlPanel, BorderLayout.NORTH);
-		this.add(Moves,BorderLayout.SOUTH);
 		this.add(puzzleGraphics, BorderLayout.CENTER);
-		this.add(gameTimerPanel, BorderLayout.SOUTH);
+		this.add(MenuPanel, BorderLayout.SOUTH);
+		
 
 		// Set up the Swing timer
 		gameTimer = new Timer(1000, new ActionListener() {
